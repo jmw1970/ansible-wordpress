@@ -69,16 +69,7 @@
     - name: Create WordPress MySQL user
       mysql_user: name=wordpress host=localhost password=bananas priv=wordpress.*:ALL
     - name: Create wp-config
-      template: src=templates/wordpress/wp-config.php dest=/var/www/book.example.com/wp-settings.php
+      template: src=templates/wordpress/wp-config.php dest=/var/www/book.example.com/wp-config.php
   handlers:
     - name: restart nginx
       service: name=nginx state=restarted
-    # Wordpress
-    - name: Copy wordpress.zip into tmp
-      copy: src=files/wordpress.zip dest=/tmp/wordpress.zip
-    - name: Unzip WordPress
-      unarchive: src=/tmp/wordpress.zip dest=/tmp copy=no creates=/tmp/wordpress/wp-settings.php
-    - name: Create project folder
-      file: dest=/var/www/book.example.com state=directory
-    - name: Copy Wordpress files
-      command: cp -a /tmp/wordpress/. /var/www/book.example.com creates=/var/www/book.example.com/wp-settings.php
