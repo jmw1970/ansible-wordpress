@@ -1,2 +1,7 @@
 ---
-# tasks file for mheap.nginx
+# nginx
+- name: Install nginx
+  apt: name=nginx state=installed
+- name: Create nginx config
+  template: src=default dest=/etc/nginx/sites-available/default
+  notify: restart nginx
